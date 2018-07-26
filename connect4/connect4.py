@@ -231,57 +231,56 @@ def update_grid(grid, column, player):
 def computer_plays():
     return random.randint(0, NUM_COLUMNS - 1)
     
-name = get_player_name()
-grid = init()
-#load_horizontal_grid_2(grid)
-column = 0
-winner = 0
-num_rounds = 0
-total_rounds = NUM_ROWS * NUM_COLUMNS
-while num_rounds < total_rounds:
+def print_outcome(winner, player_name):
+    if winner > 0:
+        if winner == 1:
+            winner_name = player_name
+        else: 
+            winner_name = "Computer"
+        print("Game is over. {} wins".format(winner_name))
+    else:
+        print("Game is over. It a tie")
+    
+def play():
+    name = get_player_name()
+    grid = init()
+    load_horizontal_grid_2(grid)
+    column = 0
+    winner = 0
+    num_rounds = 0
+    total_rounds = NUM_ROWS * NUM_COLUMNS
+    while num_rounds < total_rounds:
+        print_grid(grid)
+        column_full = True
+        while column_full:
+            column = player_plays(name)
+            column_full = is_column_full(column, grid)
+            if column_full:
+                print("Column {} is full. Try again.".format(column + 1))
+            
+        update_grid(grid, column, 1)
+        winner = game_over(grid)
+        if winner > 0:
+            break
+            
+        num_rounds += 1
+        
+        print("Computer's turn...")
+        column_full = True
+        while column_full:
+            column = computer_plays()
+            column_full = is_column_full(column, grid)
+            
+        print("Playing on column {}".format(column + 1))
+        update_grid(grid, column, 2)
+        
+        num_rounds += 1
+        
+        winner = game_over(grid)
+        if winner > 0:
+            break
+
     print_grid(grid)
-    column_full = True
-    while column_full:
-        column = player_plays(name)
-        column_full = is_column_full(column, grid)
-        if column_full:
-            print("Column {} is full. Try again.".format(column + 1))
-        
-    update_grid(grid, column, 1)
-    winner = game_over(grid)
-    if winner > 0:
-        break
-        
-    num_rounds += 1
-    
-    print("Computer's turn...")
-    column_full = True
-    while column_full:
-        column = computer_plays()
-        print("Trying column {}...".format(column + 1))
-        column_full = is_column_full(column, grid)
-        
-    print("Playing on column {}".format(column + 1))
-    update_grid(grid, column, 2)
-    
-    num_rounds += 1
-    
-    winner = game_over(grid)
-    if winner > 0:
-        break
+    print_outcome(winner, name)
 
-print_grid(grid)
-
-if winner > 0:
-    if winner == 1:
-        winner_name = name
-    else: 
-        winner_name = "Computer"
-    print("Game is over. {} wins".format(winner_name))
-else:
-    print("Game is over. It a tie")
-# if winner == 1:
-#     winner_name = name
-# else:
-#     winner_name = "Computer"
-    
+play()
