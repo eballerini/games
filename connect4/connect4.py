@@ -244,7 +244,7 @@ def print_outcome(winner, player_name):
 def play():
     name = get_player_name()
     grid = init()
-    load_horizontal_grid_2(grid)
+    #load_horizontal_grid_2(grid)
     column = 0
     winner = 0
     num_rounds = 0
