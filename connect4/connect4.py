@@ -8,8 +8,8 @@ END_COLOUR = '\033[0m'
 num_rounds = 0
 
 def get_player_name():
-    #name = raw_input("What is your name? ")
-    name = "John"
+    name = raw_input("What is your name? ")
+    #name = "John"
     print(PLAYER_COLOUR + "Welcome {}".format(name) + END_COLOUR)
     return name
 
